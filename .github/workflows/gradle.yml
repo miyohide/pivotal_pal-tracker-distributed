@@ -11,12 +11,10 @@ jobs:
       mysql:
         image: mysql:8.0.19
         env:
-          MYSQL_DATABASE: tracker_test
-          MYSQL_USER: username
-          MYSQL_PASSWORD: secret
-          MYSQL_ROOT_PASSWORD: password
+          MYSQL_USER: root
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
         ports:
-          - '3316:3306'
+          - '3306:3306'
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - uses: actions/checkout@v2
@@ -27,7 +25,10 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
-        run: ./gradlew build
+        run:
+          - mysql -uroot < databases/create_databases.sql
+          - ./gradlew testMigrate
+          - ./gradlew build
       - name: Archive Test Result
         if: always()
         uses: actions/upload-artifact@v1
