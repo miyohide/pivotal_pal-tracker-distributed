@@ -36,7 +36,7 @@ class LocalMigrationPlugin implements Plugin<Project> {
     private static FlywayExtension buildFlywayExtension(Project project, String dbName) {
         def ext = new FlywayExtension()
         ext.with {
-            url = "jdbc:mysql://localhost:3306/$dbName?useSSL=false&serverTimezone=UTC"
+            url = "jdbc:mysql://127.0.0.1:3306/$dbName?useSSL=false&serverTimezone=UTC"
             user = "tracker"
             outOfOrder = false
             locations = ["filesystem:${project.projectDir}"]
