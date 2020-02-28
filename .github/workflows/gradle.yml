@@ -26,7 +26,7 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle
         run: |
-          mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3316'] }} -uroot -ppassword < databases/create_databases.sql
+          mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uroot -ppassword < databases/create_databases.sql
           ./gradlew testMigrate
           ./gradlew build
       - name: Archive Test Result
