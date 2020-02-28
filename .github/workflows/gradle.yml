@@ -11,10 +11,10 @@ jobs:
       mysql:
         image: mysql:8.0.19
         env:
-          MYSQL_USER: root
-          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_USER: tracker
+          MYSQL_ROOT_PASSWORD: password
         ports:
-          - 3306
+          - '3316:3306'
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - uses: actions/checkout@v2
@@ -26,7 +26,7 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle
         run: |
-          mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uroot < databases/create_databases.sql
+          mysql --host 127.0.0.1 --port 3316 -u tracker -p password < databases/create_databases.sql
           ./gradlew testMigrate
           ./gradlew build
       - name: Archive Test Result
