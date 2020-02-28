@@ -37,7 +37,7 @@ class LocalMigrationPlugin implements Plugin<Project> {
         def ext = new FlywayExtension()
         ext.with {
             url = "jdbc:mysql://127.0.0.1:3306/$dbName?useSSL=false&serverTimezone=UTC"
-            user = "root"
+            user = "tracker"
             outOfOrder = false
             locations = ["filesystem:${project.projectDir}"]
         }
