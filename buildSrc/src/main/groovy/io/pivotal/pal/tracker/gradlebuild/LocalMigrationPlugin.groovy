@@ -35,8 +35,9 @@ class LocalMigrationPlugin implements Plugin<Project> {
 
     private static FlywayExtension buildFlywayExtension(Project project, String dbName) {
         def ext = new FlywayExtension()
+        def mysql_port = System.getenv()["MYSQL_PORT"]
         ext.with {
-            url = "jdbc:mysql://127.0.0.1:3316/$dbName?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
+            url = "jdbc:mysql://127.0.0.1:${mysql_port}/$dbName?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
             user = "tracker"
             password = "password"
             outOfOrder = false
