@@ -17,7 +17,7 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle
         run: |
-          mysql -uroot -ppassword < databases/create_databases.sql
+          mysql -uroot -proot < databases/create_databases.sql
           ./gradlew testMigrate
           ./gradlew build
       - name: Archive Test Result
