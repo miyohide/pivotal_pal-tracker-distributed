@@ -24,6 +24,7 @@ jobs:
       - name: Build with Gradle
         run: |
           mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uroot -proot < databases/create_databases.sql
-          mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uroot -proot -e "SHOW DATABASES;"
+          export MYSQL_PORT=${{ job.services.mysql.ports['3306'] }}
+          echo $MYSQL_PORT
           ./gradlew testMigrate
           ./gradlew build
