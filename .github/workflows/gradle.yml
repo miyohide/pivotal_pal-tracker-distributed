@@ -5,6 +5,14 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0.19
+        env:
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 11
@@ -15,6 +23,6 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle
         run: |
-          mysql -uroot -proot < databases/create_databases.sql
+          mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uroot -proot < databases/create_databases.sql
           ./gradlew testMigrate
           ./gradlew build
