@@ -1,5 +1,7 @@
 # これは何か
 
+![](https://github.com/miyohide/pivotal_pal-tracker-distributed/workflows/Java%20CI/badge.svg)
+
 Pivotalのトレーニングで使ったアプリの拡張エンハンス版です。
 
 ## GitHub Actions導入
